@@ -27,7 +27,7 @@ st.markdown(
     .description {
         text-align: center;
         font-size: 1.2rem;
-        color: #f9c74f;
+        color: #0b5394;
         margin-bottom: 20px;
     }
     .input-box {
