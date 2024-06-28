@@ -27,6 +27,7 @@ st.markdown(
     .description {
         text-align: center;
         font-size: 1.2rem;
+        color: #f9c74f;
         margin-bottom: 20px;
     }
     .input-box {
@@ -66,7 +67,7 @@ st.markdown("<div class='title'>Simbolo 'Happy' Fine Tuned Text to Image Generat
 st.markdown("<div class='description'>This model is a fine-tuned version of the Stable Diffusion model, specifically designed to generate images of 'Happy', the representative character of Simbolo, an IT class in Myanmar.</div>", unsafe_allow_html=True)
 
 # Input field
-st.markdown("<div class='input-box'><input class='input-field' type='text' id='description' value='Make sure your prmopt must include Simbolo'></div>", unsafe_allow_html=True)
+st.markdown("<div class='input-box'><input class='input-field' type='text' id='description' value='Make sure your prompt must include Simbolo'></div>", unsafe_allow_html=True)
 user_input = st.text_input("Enter your prompt here:", "A photo of Simbolo, reading an IT Book.")
 
 if st.button("Generate"):
