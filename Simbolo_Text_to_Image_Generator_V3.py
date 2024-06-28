@@ -15,7 +15,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #cfe2f3;
+        background-color: #eeeeee;
         color: white;
     }
     .title {
