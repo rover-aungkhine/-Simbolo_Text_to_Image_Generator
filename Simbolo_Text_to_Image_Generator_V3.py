@@ -11,8 +11,17 @@ def query(payload):
         response = requests.post(API_URL, headers=headers, json=payload)
         response.raise_for_status()  # Raise an error for bad status codes
         return response
-    except requests.exceptions.RequestException as e:
-        st.error(f"An error occurred: {e}")
+    except requests.exceptions.HTTPError as http_err:
+        st.error(f"HTTP error occurred: {http_err}")
+        return None
+    except requests.exceptions.ConnectionError as conn_err:
+        st.error(f"Connection error occurred: {conn_err}")
+        return None
+    except requests.exceptions.Timeout as timeout_err:
+        st.error(f"Timeout error occurred: {timeout_err}")
+        return None
+    except requests.exceptions.RequestException as req_err:
+        st.error(f"An error occurred: {req_err}")
         return None
 
 # Custom CSS for styling
@@ -55,7 +64,7 @@ st.markdown(
     }
     .generate-btn button {
         background-color: #ff4d4d; /* Bright red button */
-        color: #000000; /* White text */
+        color: #ffffff; /* White text */
         border: none;
         border-radius: 5px;
         padding: 10px 20px;
@@ -68,7 +77,7 @@ st.markdown(
     .footer {
         text-align: center;
         font-size: 0.8rem;
-        color: #ffffff; /* Light gray for footer */
+        color: #cccccc; /* Light gray for footer */
         margin-top: 40px;
     }
     .spinner {
@@ -85,7 +94,7 @@ st.markdown("<div class='description'>This model is a fine-tuned version of the 
 
 # Input field
 st.markdown("<div class='input-box'><input class='input-field' type='text' id='description' value='Make sure your prompt must include Simbolo'></div>", unsafe_allow_html=True)
-user_input = st.text_input("Enter your prompt here:", "A portrait photo of Simbolo with graduation suit.")
+user_input = st.text_input("Enter your prompt here:", "A photo of Simbolo, reading an IT Book.")
 
 if st.button("Generate"):
     with st.spinner("Generating image..."):
