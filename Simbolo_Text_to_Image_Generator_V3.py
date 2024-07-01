@@ -94,7 +94,7 @@ st.markdown("<div class='description'>This model is a fine-tuned version of the 
 
 # Input field
 st.markdown("<div class='input-box'><input class='input-field' type='text' id='description' value='Make sure your prompt must include Simbolo'></div>", unsafe_allow_html=True)
-user_input = st.text_input("Enter your prompt here:", "A photo of Simbolo, reading an IT Book.")
+user_input = st.text_input("Enter your prompt here:", "A portrait photo of Simbolo with graduation suit.")
 
 if st.button("Generate"):
     with st.spinner("Generating image..."):
