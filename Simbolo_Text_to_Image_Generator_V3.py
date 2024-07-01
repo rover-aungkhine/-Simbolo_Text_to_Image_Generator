@@ -76,7 +76,7 @@ st.markdown(
         margin-top: 40px;
     }
     .spinner {
-        color: #ffcc00; /* Bright yellow for spinner */
+        color: #ffffff; /* Bright yellow for spinner */
     }
     </style>
     """,
