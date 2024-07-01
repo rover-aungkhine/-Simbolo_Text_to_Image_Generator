@@ -9,6 +9,9 @@ headers = {"Authorization": "Bearer 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"}
 def query(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
     return response
+except requests.exceptions.RequestException as e:
+        st.error(f"An error occurred: {e}")
+        return None
 
 # Custom CSS for styling
 st.markdown(
