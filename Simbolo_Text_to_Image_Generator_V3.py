@@ -7,9 +7,11 @@ API_URL = "https://api-inference.huggingface.co/models/Aungkhine/Simbolo_Text_to
 headers = {"Authorization": "Bearer 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"}
 
 def query(payload):
-    response = requests.post(API_URL, headers=headers, json=payload)
-    return response
-except requests.exceptions.RequestException as e:
+    try:
+        response = requests.post(API_URL, headers=headers, json=payload)
+        response.raise_for_status()  # Raise an error for bad status codes
+        return response
+    except requests.exceptions.RequestException as e:
         st.error(f"An error occurred: {e}")
         return None
 
@@ -18,23 +20,23 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #eeeeee;
+        background-color: #1e1e1e;
         color: white;
     }
     .title {
         text-align: center;
         font-size: 2.5rem;
-        color: #20124d;
+        color: #f9c74f;
         margin-bottom: 20px;
     }
     .description {
         text-align: center;
         font-size: 1.2rem;
-        color: #0b5394;
+        color: #f9c74f;
         margin-bottom: 20px;
     }
     .input-box {
-        display: flex;
+        display: flex;  
         justify-content: center;
         margin-bottom: 20px;
     }
@@ -76,15 +78,20 @@ user_input = st.text_input("Enter your prompt here:", "A photo of Simbolo, readi
 if st.button("Generate"):
     with st.spinner("Generating image..."):
         response = query({"inputs": user_input})
-        if response.status_code == 200:
-            try:
-                image_bytes = response.content
-                image = Image.open(io.BytesIO(image_bytes))
-                st.image(image, caption=user_input)
-            except Exception as e:
-                st.error(f"Error generating image: {e}")
+        if response is not None:
+            if response.status_code == 200:
+                try:
+                    image_bytes = response.content
+                    image = Image.open(io.BytesIO(image_bytes))
+                    st.image(image, caption=user_input)
+                except Exception as e:
+                    st.error(f"Error processing image: {e}")
+            elif response.status_code == 503:
+                st.error("The model is currently loading. Please try again in a few moments.")
+            else:
+                st.error(f"API request failed with status code {response.status_code}: {response.text}")
         else:
-            st.error(f"API request failed with status code {response.status_code}: {response.text}")
+            st.error("Failed to get a response from the API.")
 
 # Footer
 st.markdown("<div class='footer'>Developed with ❤️ by Team Zee Kwat</div>", unsafe_allow_html=True)
