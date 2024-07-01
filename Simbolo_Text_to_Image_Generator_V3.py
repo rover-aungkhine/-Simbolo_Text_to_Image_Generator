@@ -20,19 +20,19 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-color: #1e1e1e;
-        color: white;
+        background-color: #2b2b2b; /* Slightly lighter background */
+        color: #ffffff; /* White text */
     }
     .title {
         text-align: center;
         font-size: 2.5rem;
-        color: #f9c74f;
+        color: #ffcc00; /* Bright yellow for title */
         margin-bottom: 20px;
     }
     .description {
         text-align: center;
         font-size: 1.2rem;
-        color: #f9c74f;
+        color: #ffcc00; /* Bright yellow for description */
         margin-bottom: 20px;
     }
     .input-box {
@@ -43,24 +43,36 @@ st.markdown(
     .input-field {
         width: 60%;
         padding: 10px;
-        border: 1px solid #f9c74f;
+        border: 1px solid #ffcc00; /* Bright yellow border */
         border-radius: 5px;
-        background-color: #2d2d2d;
-        color: white;
+        background-color: #3c3c3c; /* Darker input background */
+        color: #ffffff; /* White text */
     }
     .generate-btn {
         display: flex;
         justify-content: center;
         margin-top: 20px;
     }
+    .generate-btn button {
+        background-color: #ff4d4d; /* Bright red button */
+        color: #ffffff; /* White text */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .generate-btn button:hover {
+        background-color: #e60000; /* Darker red on hover */
+    }
     .footer {
         text-align: center;
         font-size: 0.8rem;
-        color: #8c8c8c;
+        color: #cccccc; /* Light gray for footer */
         margin-top: 40px;
     }
     .spinner {
-        color: #f9c74f;
+        color: #ffcc00; /* Bright yellow for spinner */
     }
     </style>
     """,
