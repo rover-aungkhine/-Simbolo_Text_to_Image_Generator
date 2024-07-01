@@ -9,20 +9,15 @@ headers = {"Authorization": "Bearer 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"}
 def query(payload):
     try:
         response = requests.post(API_URL, headers=headers, json=payload)
-        response.raise_for_status()  # Raise an error for bad status codes
+        response.raise_for_status()
         return response
     except requests.exceptions.HTTPError as http_err:
-        st.error(f"HTTP error occurred: {http_err}")
-        return None
-    except requests.exceptions.ConnectionError as conn_err:
-        st.error(f"Connection error occurred: {conn_err}")
-        return None
-    except requests.exceptions.Timeout as timeout_err:
-        st.error(f"Timeout error occurred: {timeout_err}")
-        return None
-    except requests.exceptions.RequestException as req_err:
-        st.error(f"An error occurred: {req_err}")
-        return None
+        if response.status_code == 503:
+            st.error("The model is currently loading. Please try again in a few moments.")
+        else:
+            st.error(f"HTTP error occurred: {http_err}")
+    except Exception as err:
+        st.error(f"An error occurred: {err}")
 
 # Custom CSS for styling
 st.markdown(
@@ -99,19 +94,14 @@ user_input = st.text_input("Enter your prompt here:", "A portrait photo of Simbo
 if st.button("Generate"):
     with st.spinner("Generating image..."):
         response = query({"inputs": user_input})
-        if response is not None:
-            if response.status_code == 200:
-                try:
-                    image_bytes = response.content
-                    image = Image.open(io.BytesIO(image_bytes))
-                    st.image(image, caption=user_input)
-                except Exception as e:
-                    st.error(f"Error processing image: {e}")
-            elif response.status_code == 503:
-                st.error("The model is currently loading. Please try again in a few moments.")
-            else:
-                st.error(f"API request failed with status code {response.status_code}: {response.text}")
-        else:
+        if response is not None and response.status_code == 200:
+            try:
+                image_bytes = response.content
+                image = Image.open(io.BytesIO(image_bytes))
+                st.image(image, caption=user_input)
+            except Exception as e:
+                st.error(f"Error processing image: {e}")
+        elif response is None:
             st.error("Failed to get a response from the API.")
 
 # Footer
