@@ -72,7 +72,7 @@ st.markdown(
     .footer {
         text-align: center;
         font-size: 0.8rem;
-        color: #cccccc; /* Light gray for footer */
+        color: #ffffff; /* Light gray for footer */
         margin-top: 40px;
     }
     .spinner {
